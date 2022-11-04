@@ -33,7 +33,7 @@ function AddPlayers({ handleAddPlayer, startGame, gameState }) {
 			</Form.Group>
 			<Container fluid>
 				<Row>
-					{gameState.length == 0 ? (
+					{gameState.length === 0 ? (
 						<>
 							<Button
 								variant='primary'

@@ -137,6 +137,7 @@ function App() {
 					<a
 						href='https://www.linkedin.com/in/erik-ortiz-q/'
 						target='_blank'
+						rel='noreferrer'
 					>
 						Erik Ortiz
 					</a>
