@@ -9,24 +9,35 @@ import { Image } from 'react-bootstrap';
 
 function App() {
 	//state for the list of players
-	const [listPlayers, setListPlayers] = React.useState([]);
+	const [listPlayers, setListPlayers] = React.useState(
+		() => JSON.parse(localStorage.getItem('listPlayers')) || []
+	);
 
 	//state for all the champs
 	const [champs, setChamps] = React.useState([]);
 
-	//save the state of the game
-	const [gameState, setGameState] = React.useState([]);
+	//save the state of the game from local storage if it exists
+	const [gameState, setGameState] = React.useState(() => {
+		const localData = localStorage.getItem('gameState');
+		return localData ? JSON.parse(localData) : [];
+	});
 
 	//function to handle the submit event
 	const handleAddPlayer = (player) => {
 		if (player === '') return alert('Please enter a name');
 		if (listPlayers.length >= 5) return alert('You can only add 5 players');
 		setListPlayers([...listPlayers, player]);
+		// save on local
+		localStorage.setItem(
+			'listPlayers',
+			JSON.stringify([...listPlayers, player])
+		);
 	};
 
 	const resetPlayers = () => {
-		startGame();
 		setListPlayers([]);
+		setGameState([]);
+		localStorage.clear();
 	};
 
 	const startGame = () => {
@@ -40,6 +51,8 @@ function App() {
 				};
 			})
 		);
+		//save on local storage
+		localStorage.setItem('gameState', JSON.stringify(gameState));
 		console.log(gameState);
 	};
 
@@ -61,11 +74,12 @@ function App() {
 				};
 			})
 		);
+		//save on local storage
+		localStorage.setItem('gameState', JSON.stringify(gameState));
 		console.log(gameState);
 	};
 
 	//fetch the data from http://ddragon.leagueoflegends.com/cdn/12.21.1/data/en_US/champion.json
-	//and save it in the state
 	React.useEffect(() => {
 		fetch(
 			'http://ddragon.leagueoflegends.com/cdn/12.21.1/data/en_US/champion.json'
@@ -96,6 +110,7 @@ function App() {
 						handleAddPlayer={handleAddPlayer}
 						listPlayers={listPlayers}
 						startGame={startGame}
+						gameState={gameState}
 					>
 						{' '}
 					</AddPlayers>{' '}
@@ -106,13 +121,28 @@ function App() {
 				</Col>
 				<Col>
 					{' '}
-					<MainButtons
-						resetPlayers={resetPlayers}
-						startGame={randomize}
-					></MainButtons>{' '}
+					{gameState.length > 0 ? (
+						<MainButtons
+							resetPlayers={resetPlayers}
+							startGame={randomize}
+						></MainButtons>
+					) : (
+						''
+					)}{' '}
 				</Col>
 			</Row>
 			<Row>
+				<div>
+					Made with love
+					<a
+						href='https://www.linkedin.com/in/erik-ortiz-q/'
+						target='_blank'
+					>
+						Erik Ortiz
+					</a>
+					❤️❤️
+				</div>
+
 				{gameState.map((player, i) => {
 					return (
 						<Col className='text-center border rounded m-3' key={i}>

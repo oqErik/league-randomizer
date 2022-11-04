@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import React from 'react';
 
-function AddPlayers({ handleAddPlayer, startGame }) {
+function AddPlayers({ handleAddPlayer, startGame, gameState }) {
 	//save the player name in the state
 	const [playerName, setPlayerName] = React.useState('');
 
@@ -33,20 +33,26 @@ function AddPlayers({ handleAddPlayer, startGame }) {
 			</Form.Group>
 			<Container fluid>
 				<Row>
-					<Button
-						variant='primary'
-						onClick={handlePlayer}
-						className='m-2'
-					>
-						Add player
-					</Button>
-					<Button
-						variant='primary'
-						onClick={startGame}
-						className='m-2'
-					>
-						Start game
-					</Button>
+					{gameState.length == 0 ? (
+						<>
+							<Button
+								variant='primary'
+								onClick={handlePlayer}
+								className='m-2'
+							>
+								Add player
+							</Button>
+							<Button
+								variant='primary'
+								onClick={startGame}
+								className='m-2'
+							>
+								Start game
+							</Button>
+						</>
+					) : (
+						''
+					)}
 				</Row>
 			</Container>
 		</Form>
