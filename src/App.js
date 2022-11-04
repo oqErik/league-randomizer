@@ -79,10 +79,10 @@ function App() {
 		console.log(gameState);
 	};
 
-	//fetch the data from http://ddragon.leagueoflegends.com/cdn/12.21.1/data/en_US/champion.json
+	//fetch the data from https://ddragon.leagueoflegends.com/cdn/12.21.1/data/en_US/champion.json
 	React.useEffect(() => {
 		fetch(
-			'http://ddragon.leagueoflegends.com/cdn/12.21.1/data/en_US/champion.json'
+			'https://ddragon.leagueoflegends.com/cdn/12.21.1/data/en_US/champion.json'
 		)
 			.then((response) => response.json())
 			.then(({ data }) => {
@@ -90,8 +90,8 @@ function App() {
 				const filteredChamps = champsResponse.map((champ) => {
 					return {
 						name: champ.name,
-						icon: `http://ddragon.leagueoflegends.com/cdn/12.21.1/img/champion/${champ.id}.png`,
-						splash: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.id}_1.jpg`,
+						icon: `https://ddragon.leagueoflegends.com/cdn/12.21.1/img/champion/${champ.id}.png`,
+						splash: `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.id}_1.jpg`,
 						title: champ.title,
 					};
 				});
